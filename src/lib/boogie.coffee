@@ -113,5 +113,8 @@ class Boogie
 
 
 # Expose object to the global namespace.
-root = if typeof exports is 'object' then exports else this
-root.Boogie = Boogie
+if expose?
+  expose Boogie, 'Boogie'
+else
+  root = if typeof exports is 'object' then exports else this
+  root.Boogie = Boogie
