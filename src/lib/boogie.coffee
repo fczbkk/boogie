@@ -10,6 +10,7 @@ class Boogie
 
 
   constructor: (options) ->
+    @is_active = false
     @options = {}
     @setOptions @default_options
     @setOptions options
@@ -56,6 +57,8 @@ class Boogie
 
 
   record: (type = 'log', code = null, data = {}) ->
+    return unless @is_active
+
     item =
       type: type
       code: code
@@ -78,6 +81,10 @@ class Boogie
   info:  (code, data) -> @record 'info',  code, data
   warn:  (code, data) -> @record 'warn',  code, data
   error: (code, data) -> @record 'error', code, data
+
+
+  activate: -> @is_active = true
+  deactivate: -> @is_active = false
 
 
 # Expose object to the global namespace.

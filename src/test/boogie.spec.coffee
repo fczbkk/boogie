@@ -6,6 +6,7 @@ describe 'Boogie', ->
 
   beforeEach ->
     b = new Boogie
+    b.activate()
 
     for method in ['log', 'info', 'warn', 'error']
       spyOn console, method
@@ -135,7 +136,6 @@ describe 'Boogie', ->
       expect(console.error).toHaveBeenCalled()
 
 
-
   describe 'prefix', ->
 
     it 'should allow to set prefix via options', ->
@@ -231,3 +231,24 @@ describe 'Boogie', ->
       b.setFilter []
       b.log()
       expect(b.options.callback).not.toHaveBeenCalled()
+
+
+  describe 'state', ->
+
+    it 'should be inactive by default', ->
+      b = new Boogie
+      expect(b.is_active).toEqual false
+
+    it 'should be possible to activate', ->
+      b.activate()
+      expect(b.is_active).toEqual true
+
+    it 'should be possible deactivate', ->
+      b.activate()
+      b.deactivate()
+      expect(b.is_active).toEqual false
+
+    it 'should not record any data when inactive', ->
+      b.deactivate()
+      b.log()
+      expect(b.history.length).toEqual 0
