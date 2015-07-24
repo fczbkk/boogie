@@ -252,3 +252,37 @@ describe 'Boogie', ->
       b.deactivate()
       b.log()
       expect(b.history.length).toEqual 0
+
+
+  describe 'control by URL', ->
+
+    it 'should have option for url prefix', ->
+      expect(b.options.url_prefix).toEqual 'boogie'
+
+    it 'should parse URL params from document location', ->
+      result = b.parseLocation {search: '?aaa=bbb&ccc=ddd'}
+      expect(result).toEqual {aaa: 'bbb', ccc: 'ddd'}
+
+    it 'should activate via URL param', ->
+      b.deactivate()
+      result = b.evalLocation {search: '?boogieactivate=1'}
+      expect(b.is_active).toEqual true
+
+    it 'should set filter via URL param', ->
+      result = b.evalLocation {search: '?boogiefilter=info,warn'}
+      expect(b.options.filter).toEqual ['info', 'warn']
+
+    it 'should use url_prefix when parsing location', ->
+      b.deactivate()
+      b.setOptions {url_prefix: 'aaa'}
+
+      b.evalLocation {search: '?boogieactivate=1'}
+      expect(b.is_active).toEqual false
+
+      b.evalLocation {search: '?aaaactivate=1'}
+      expect(b.is_active).toEqual true
+
+    it 'should check for URL params upon init', ->
+      spyOn Boogie.prototype, 'evalLocation'
+      b = new Boogie
+      expect(Boogie::evalLocation).toHaveBeenCalled()

@@ -5,6 +5,7 @@ class Boogie
     filter: ['log', 'info', 'warn', 'error']
     codes: {}
     prefix: null
+    url_prefix: 'boogie'
     unknown_template: 'Unkonwn event.'
     callback: ->
 
@@ -15,6 +16,7 @@ class Boogie
     @setOptions @default_options
     @setOptions options
     @history = []
+    @evalLocation()
 
 
   setOptions: (options = {}) ->
@@ -85,6 +87,29 @@ class Boogie
 
   activate: -> @is_active = true
   deactivate: -> @is_active = false
+
+
+  parseLocation: (location) ->
+    result = {}
+
+    location.search
+      ?.replace /^\?/, ''
+      .split '&'
+      .map (item) ->
+        [key, val] = item.split '='
+        result[key] = val
+
+    result
+
+
+  evalLocation: (location = document.location) ->
+    params = @parseLocation location
+
+    if params["#{@options.url_prefix}activate"]?
+      @activate()
+
+    if params["#{@options.url_prefix}filter"]?
+      @setFilter params["#{@options.url_prefix}filter"].split ','
 
 
 # Expose object to the global namespace.
