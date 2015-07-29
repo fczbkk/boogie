@@ -1,3 +1,6 @@
+noop = ->
+
+
 class Boogie
 
 
@@ -7,7 +10,9 @@ class Boogie
     prefix: null
     url_prefix: 'boogie'
     unknown_template: 'Unkonwn event.'
-    callback: ->
+    onRecord: noop
+    onActivate: noop
+    onDeactivate: noop
 
 
   constructor: (options) ->
@@ -22,27 +27,6 @@ class Boogie
   setOptions: (options = {}) ->
     for key, val of options
       @options[key] = val
-
-
-  setCallback: (fn = ->) ->
-    @setOptions {callback: fn}
-
-
-  setPrefix: (val) ->
-    @setOptions {prefix: val}
-
-
-  setCodes: (codes = {}) ->
-    for key, val of codes
-      @options.codes[key] = val
-
-
-  setFilter: (items = []) ->
-    @setOptions {filter: items}
-
-
-  resetFilter: ->
-    @setFilter ['log', 'info', 'warn', 'error']
 
 
   evalTemplate: (template = @options.unknown_template, data = {}) ->
@@ -76,7 +60,7 @@ class Boogie
       console_args.unshift @options.prefix if @options.prefix?
       console[type].apply console, console_args
 
-      @options.callback type, code, data, item.message
+      @options.onRecord type, code, data, item.message
 
 
   log:   (code, data) -> @record 'log',   code, data
@@ -85,8 +69,14 @@ class Boogie
   error: (code, data) -> @record 'error', code, data
 
 
-  activate: -> @is_active = true
-  deactivate: -> @is_active = false
+  activate: ->
+    @is_active = true
+    @options.onActivate()
+
+
+  deactivate: ->
+    @is_active = false
+    @options.onDeactivate()
 
 
   parseLocation: (location) ->
@@ -109,7 +99,7 @@ class Boogie
       @activate()
 
     if params["#{@options.url_prefix}filter"]?
-      @setFilter params["#{@options.url_prefix}filter"].split ','
+      @setOptions filter: params["#{@options.url_prefix}filter"].split ','
 
 
 # Expose object to the global namespace.

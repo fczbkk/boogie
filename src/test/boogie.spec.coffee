@@ -39,7 +39,7 @@ describe 'Boogie', ->
       expect(b.options.codes).toBeDefined()
 
     it 'should have method to set codes', ->
-      b.setCodes {aaa: 'bbb', ccc: 'ddd'}
+      b.setOptions codes: {aaa: 'bbb', ccc: 'ddd'}
       expect(b.options.codes.aaa).toEqual 'bbb'
       expect(b.options.codes.ccc).toEqual 'ddd'
 
@@ -114,7 +114,7 @@ describe 'Boogie', ->
   describe 'console', ->
 
     it 'should send evaluated message and data to the console', ->
-      b.setCodes
+      b.setOptions codes:
         aaa: (data) -> "aaa#{data.bbb}"
       b.log 'aaa', {bbb: 'ccc'}
       expect(console.log).toHaveBeenCalledWith 'aaaccc', {bbb: 'ccc'}
@@ -142,63 +142,70 @@ describe 'Boogie', ->
       b.setOptions {prefix: 'aaa'}
       expect(b.options.prefix).toEqual 'aaa'
 
-    it 'should allow to set prefix directly', ->
-      b.setPrefix 'aaa'
-      expect(b.options.prefix).toEqual 'aaa'
-
     it 'should include prefix in the console output', ->
-      b.setCodes {bbb: 'ccc'}
-      b.setPrefix 'aaa'
+      b.setOptions
+        prefix: 'aaa'
+        codes: {bbb: 'ccc'}
       b.log 'bbb'
       args = console.log.calls.mostRecent().args
       expect(args[0]).toEqual 'aaa'
       expect(args[1]).toEqual 'ccc'
 
 
-  describe 'callback', ->
+  describe 'onRecord', ->
 
     it 'should allow to set callback via options', ->
       fn = ->
-      b.setOptions {callback: fn}
-      expect(b.options.callback).toEqual fn
-
-    it 'should allow to set callback directly', ->
-      fn = ->
-      b.setCallback fn
-      expect(b.options.callback).toEqual fn
+      b.setOptions {onRecord: fn}
+      expect(b.options.onRecord).toEqual fn
 
     it 'should call callback when item is added', ->
-      spyOn b.options, 'callback'
+      spyOn b.options, 'onRecord'
       b.log()
-      expect(b.options.callback).toHaveBeenCalled()
+      expect(b.options.onRecord).toHaveBeenCalled()
 
     it 'should provide type in the callback', ->
-      spyOn b.options, 'callback'
+      spyOn b.options, 'onRecord'
       b.log()
-      args = b.options.callback.calls.mostRecent().args
+      args = b.options.onRecord.calls.mostRecent().args
       expect(args[0]).toEqual 'log'
 
     it 'should provide code in the callback', ->
-      spyOn b.options, 'callback'
-      b.setCodes {bbb: 'ccc'}
+      spyOn b.options, 'onRecord'
+      b.setOptions codes: {bbb: 'ccc'}
       b.log 'bbb'
-      args = b.options.callback.calls.mostRecent().args
+      args = b.options.onRecord.calls.mostRecent().args
       expect(args[1]).toEqual 'bbb'
 
     it 'should provide data in the callback', ->
-      spyOn b.options, 'callback'
+      spyOn b.options, 'onRecord'
       data = {aaa: 'bbb'}
       b.log 'bbb', data
-      args = b.options.callback.calls.mostRecent().args
+      args = b.options.onRecord.calls.mostRecent().args
       expect(args[2]).toEqual data
 
     it 'should provide message in the callback', ->
-      spyOn b.options, 'callback'
-      b.setCodes {bbb: 'ccc'}
+      spyOn b.options, 'onRecord'
+      b.setOptions codes: {bbb: 'ccc'}
       b.log 'bbb'
-      args = b.options.callback.calls.mostRecent().args
+      args = b.options.onRecord.calls.mostRecent().args
       expect(args[3]).toEqual 'ccc'
 
+
+  describe 'onActivate', ->
+
+    it 'should be called when activated', ->
+      spyOn b.options, 'onActivate'
+      b.activate()
+      expect(b.options.onActivate).toHaveBeenCalled()
+
+
+  describe 'onDeactivate', ->
+
+    it 'should be called when deactivated', ->
+      spyOn b.options, 'onDeactivate'
+      b.deactivate()
+      expect(b.options.onDeactivate).toHaveBeenCalled()
 
 
   describe 'filter', ->
@@ -210,27 +217,18 @@ describe 'Boogie', ->
       b.setOptions {filter: ['aaa']}
       expect(b.options.filter).toEqual ['aaa']
 
-    it 'should be able to set the filter directly', ->
-      b.setFilter ['aaa']
-      expect(b.options.filter).toEqual ['aaa']
-
-    it 'should be able to reset filter', ->
-      b.setFilter []
-      b.resetFilter()
-      expect(b.options.filter).toEqual ['log', 'info', 'warn', 'error']
-
     it 'should not send filtered items to console', ->
-      b.setFilter ['log']
+      b.setOptions filter: ['log']
       b.log()
       b.info()
       expect(console.log).toHaveBeenCalled()
       expect(console.info).not.toHaveBeenCalled()
 
     it 'should not call callback for filtered items', ->
-      spyOn b.options, 'callback'
-      b.setFilter []
+      spyOn b.options, 'onRecord'
+      b.setOptions filter: []
       b.log()
-      expect(b.options.callback).not.toHaveBeenCalled()
+      expect(b.options.onRecord).not.toHaveBeenCalled()
 
 
   describe 'state', ->
