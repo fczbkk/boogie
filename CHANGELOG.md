@@ -1,3 +1,12 @@
+<a name"0.3.0"></a>
+## 0.3.0 (2015-07-29)
+
+
+#### Features
+
+* add specific callbacks for `onRecord`, `onActivate` and `onDeactivate` ([0d068c36](https://github.com/fczbkk/boogie/commit/0d068c36))
+
+
 <a name"0.2.1"></a>
 ### 0.2.1 (2015-07-24)
 
