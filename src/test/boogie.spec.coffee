@@ -43,6 +43,21 @@ describe 'Boogie', ->
       expect(b.options.codes.aaa).toEqual 'bbb'
       expect(b.options.codes.ccc).toEqual 'ddd'
 
+    it 'should allow nested list of codes', ->
+      b.setOptions codes: aaa: bbb: ccc: 'ddd'
+      expect(b.options.codes.aaa.bbb.ccc).toEqual 'ddd'
+
+    it 'should address a nested code', ->
+      b.setOptions codes: aaa: bbb: ccc: 'ddd'
+      expect(b.getTemplateByCode 'aaa.bbb.ccc').toEqual 'ddd'
+
+    it 'should use correct template from nested code on record', ->
+      spyOn b, 'evalTemplate'
+      b.setOptions codes: aaa: bbb: ccc: 'ddd'
+      b.log 'aaa.bbb.ccc', {}
+      expect(b.evalTemplate).toHaveBeenCalledWith 'ddd', {}
+
+
   describe 'templates', ->
 
     it 'should allow simple text templates', ->

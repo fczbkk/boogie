@@ -29,6 +29,16 @@ class Boogie
       @options[key] = val
 
 
+  getTemplateByCode: (code) ->
+    return @options.unknown_template unless code
+
+    template_object = @options.codes
+    for step in code.split '.'
+      template_object = template_object[step]
+
+    return template_object
+
+
   evalTemplate: (template = @options.unknown_template, data = {}) ->
     switch typeof template
       when 'function'
@@ -45,12 +55,14 @@ class Boogie
   record: (type = 'log', code = null, data = {}) ->
     return unless @is_active
 
+    template = @getTemplateByCode code
+
     item =
       type: type
       code: code
       data: data
       timestamp: (new Date).getTime()
-      message: @evalTemplate @options.codes[code], data
+      message: @evalTemplate template, data
 
     @history.push item
 
