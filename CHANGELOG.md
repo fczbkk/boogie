@@ -1,3 +1,12 @@
+<a name"0.4.0"></a>
+## 0.4.0 (2015-08-01)
+
+
+#### Features
+
+* add support for nested codes ([7406db8a](https://github.com/fczbkk/boogie/commit/7406db8a))
+
+
 <a name"0.3.0"></a>
 ## 0.3.0 (2015-07-29)
 
