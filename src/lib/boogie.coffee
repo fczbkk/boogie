@@ -32,11 +32,12 @@ class Boogie
   getTemplateByCode: (code) ->
     return @options.unknown_template unless code
 
-    template_object = @options.codes
+    found_object = @options.codes
     for step in code.split '.'
-      template_object = template_object[step]
+      return @options.unknown_template unless found_object[step]?
+      found_object = found_object[step]
 
-    return template_object
+    return found_object
 
 
   evalTemplate: (template = @options.unknown_template, data = {}) ->

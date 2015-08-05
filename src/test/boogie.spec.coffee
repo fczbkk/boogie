@@ -57,6 +57,11 @@ describe 'Boogie', ->
       b.log 'aaa.bbb.ccc', {}
       expect(b.evalTemplate).toHaveBeenCalledWith 'ddd', {}
 
+    it 'should use default template when invalid code is used', ->
+      b.setOptions codes: aaa: bbb: 'ddd'
+      result = b.getTemplateByCode 'aaa.bbb.ccc'
+      expect(result).toEqual b.options.unknown_template
+
 
   describe 'templates', ->
 
