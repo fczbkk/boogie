@@ -1,32 +1,29 @@
 noop = ->
 
+default_options =
+  filter: ['log', 'info', 'warn', 'error']
+  codes: {}
+  prefix: null
+  url_prefix: 'boogie'
+  unknown_template: 'Unkonwn event.'
+  onRecord: noop
+  onActivate: noop
+  onDeactivate: noop
 
-class Boogie
 
-
-  default_options:
-    filter: ['log', 'info', 'warn', 'error']
-    codes: {}
-    prefix: null
-    url_prefix: 'boogie'
-    unknown_template: 'Unkonwn event.'
-    onRecord: noop
-    onActivate: noop
-    onDeactivate: noop
-
+module.exports = class Boogie
 
   constructor: (options) ->
     @is_active = false
     @options = {}
-    @setOptions @default_options
+    @setOptions default_options
     @setOptions options
     @history = []
     @evalLocation()
 
 
   setOptions: (options = {}) ->
-    for key, val of options
-      @options[key] = val
+    @options = Object.assign @options, options
 
 
   getTemplateByCode: (code) ->
@@ -113,11 +110,3 @@ class Boogie
 
     if params["#{@options.url_prefix}filter"]?
       @setOptions filter: params["#{@options.url_prefix}filter"].split ','
-
-
-# Expose object to the global namespace.
-if expose?
-  expose Boogie, 'Boogie'
-else
-  root = if typeof exports is 'object' then exports else this
-  root.Boogie = Boogie

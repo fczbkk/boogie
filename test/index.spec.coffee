@@ -1,3 +1,6 @@
+Boogie = require './../src/index.coffee'
+
+
 describe 'Boogie', ->
 
 
@@ -22,7 +25,14 @@ describe 'Boogie', ->
   describe 'options', ->
 
     it 'should use default options', ->
-      expect(b.options).toEqual b.default_options
+      expect(b.options.filter).toEqual ['log', 'info', 'warn', 'error']
+      expect(b.options.codes).toEqual {}
+      expect(b.options.prefix).toEqual null
+      expect(b.options.url_prefix).toEqual 'boogie'
+      expect(b.options.unknown_template).toEqual 'Unkonwn event.'
+      expect(typeof b.options.onRecord).toEqual 'function'
+      expect(typeof b.options.onActivate).toEqual 'function'
+      expect(typeof b.options.onDeactivate).toEqual 'function'
 
     it 'should use options provided at init', ->
       b = new Boogie {prefix: 'xxx'}
