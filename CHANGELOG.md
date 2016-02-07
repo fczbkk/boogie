@@ -1,3 +1,9 @@
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/fczbkk/boogie/compare/v0.4.1...v0.4.1) (2016-02-07)
+
+
+
+
 <a name"0.4.1"></a>
 ### 0.4.1 (2015-08-05)
 
