@@ -1,3 +1,13 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/fczbkk/boogie/compare/v1.0.0...v1.0.0) (2016-02-07)
+
+
+### Bug Fixes
+
+* correct path to lib in bower.json and package.json ([750b769](https://github.com/fczbkk/boogie/commit/750b769))
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/fczbkk/boogie/compare/v0.4.1...v0.4.1) (2016-02-07)
 

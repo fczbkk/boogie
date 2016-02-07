@@ -1,6 +1,6 @@
 {
   "name": "boogie",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/fczbkk/boogie",
   "author": "Riki Fridrich <riki@fczbkk.com> (https://github.com/fczbkk)",
   "description": "Debugging and logging utility for JavaScript.",
