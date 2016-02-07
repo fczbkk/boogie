@@ -48,5 +48,5 @@
     "rimraf": "^2.5.1",
     "webpack": "^1.12.13"
   },
-  "main": "lib/node/boogie.js"
+  "main": "lib/node/index.js"
 }

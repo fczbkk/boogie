@@ -4,7 +4,7 @@
   "homepage": "https://github.com/fczbkk/boogie",
   "author": "Riki Fridrich <riki@fczbkk.com> (https://github.com/fczbkk)",
   "description": "Debugging and logging utility for JavaScript.",
-  "main": "lib/browser/boogie.js",
+  "main": "lib/browser/index.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
