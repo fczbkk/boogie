@@ -13,7 +13,7 @@
     "build": "npm run build:test && npm run build:browser && npm run build:node",
     "build:browser": "webpack --config webpack.browser.config.js",
     "build:test": "webpack --config webpack.test.config.js",
-    "build:node": "coffee -b -c -o ./temp/lib/node ./src && babel ./temp/lib/node -d ./temp/lib/node",
+    "build:node": "coffee -b -c -o ./temp/lib/node ./src && babel ./temp/lib/node -d ./lib/node",
     "watch": "npm run watch:test & npm run watch:karma",
     "watch:test": "webpack --config webpack.test.config.js --watch",
     "watch:karma": "karma start karma.conf.js",

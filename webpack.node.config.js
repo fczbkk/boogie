@@ -3,7 +3,7 @@ module.exports = {
   entry: './src/index.coffee',
 
   output: {
-    path: './temp/lib/node/',
+    path: './lib/node/',
     filename: 'index.js'
   },
 

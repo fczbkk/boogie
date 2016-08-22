@@ -3,7 +3,7 @@ module.exports = {
   entry: './src/index.coffee',
 
   output: {
-    path: './temp/lib/browser/',
+    path: './lib/browser/',
     filename: 'index.js',
     library: 'Boogie',
     libraryTarget: 'umd'
