@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/fczbkk/boogie/compare/v1.1.0...v1.1.1) (2016-08-22)
+
+
+### Bug Fixes
+
+* fix build paths ([69c354b](https://github.com/fczbkk/boogie/commit/69c354b))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/fczbkk/boogie/compare/v1.0.2...v1.1.0) (2016-08-22)
 
