@@ -59,6 +59,12 @@ Or you can activate it using GET parameter in the URL. This is handy in situatio
 ...?boogieactivate=1
 ```
 
+Or you can activate it using `localStorage`. It is good way to set persistent state of Boogie for websites that use redirects and other nasty stuff. Use it pretty much the same as activation via URL:
+
+```javascript
+localStorage.setItem('boogieactivate', 1);
+```
+
 ## Methods
 
 ### setOptions()

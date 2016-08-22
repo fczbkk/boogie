@@ -314,3 +314,36 @@ describe 'Boogie', ->
       spyOn Boogie.prototype, 'evalLocation'
       b = new Boogie
       expect(Boogie::evalLocation).toHaveBeenCalled()
+
+  describe 'control by localStorage', ->
+
+    afterEach ->
+      localStorage.clear()
+
+    it 'should activate', ->
+      b.deactivate()
+      localStorage.setItem('boogieactivate', 1)
+      result = b.evalStorage()
+      expect(b.is_active).toEqual true
+
+    it 'should use url_prefix when parsing', ->
+      b.deactivate()
+      b.setOptions {url_prefix: 'aaa'}
+
+      localStorage.setItem('boogieactivate', 1)
+      b.evalStorage()
+      expect(b.is_active).toEqual false
+
+      localStorage.setItem('aaaactivate', 1)
+      b.evalStorage()
+      expect(b.is_active).toEqual true
+
+    it 'should set filter', ->
+      localStorage.setItem('boogiefilter', 'info,warn')
+      b.evalStorage()
+      expect(b.options.filter).toEqual ['info', 'warn']
+
+    it 'should check upon init', ->
+      spyOn Boogie.prototype, 'evalStorage'
+      b = new Boogie
+      expect(Boogie::evalStorage).toHaveBeenCalled()

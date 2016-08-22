@@ -20,6 +20,7 @@ module.exports = class Boogie
     @setOptions options
     @history = []
     @evalLocation()
+    @evalStorage()
 
 
   setOptions: (options = {}) ->
@@ -108,5 +109,15 @@ module.exports = class Boogie
     if params["#{@options.url_prefix}activate"]?
       @activate()
 
-    if params["#{@options.url_prefix}filter"]?
-      @setOptions filter: params["#{@options.url_prefix}filter"].split ','
+    found_filter = params["#{@options.url_prefix}filter"]
+    if found_filter?
+      @setOptions filter: found_filter.split ','
+
+
+  evalStorage: ->
+    if localStorage.getItem("#{@options.url_prefix}activate")?
+      @activate()
+
+    found_filter = localStorage.getItem("#{@options.url_prefix}filter")
+    if found_filter?
+      @setOptions filter: found_filter.split ','
