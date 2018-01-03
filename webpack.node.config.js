@@ -1,9 +1,12 @@
+const path = require('path');
+
+
 module.exports = {
 
   entry: './src/index.coffee',
 
   output: {
-    path: './lib/node/',
+    path: path.resolve(__dirname, 'lib/node'),
     filename: 'index.js'
   },
 

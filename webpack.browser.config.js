@@ -1,9 +1,12 @@
+const path = require('path');
+
+
 module.exports = {
 
   entry: './src/index.coffee',
 
   output: {
-    path: './lib/browser/',
+    path: path.resolve(__dirname, 'lib/browser'),
     filename: 'index.js',
     library: 'Boogie',
     libraryTarget: 'umd'
