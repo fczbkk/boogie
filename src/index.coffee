@@ -87,14 +87,14 @@ module.exports = class Boogie
 
   deactivate: ->
     @is_active = false
+    localStorage.removeItem("#{@options.url_prefix}activate")
     @options.onDeactivate()
 
 
   parseLocation: (location) ->
     result = {}
 
-    location.search
-      ?.replace /^\?/, ''
+    location.search?.replace /^\?/, ''
       .split '&'
       .map (item) ->
         [key, val] = item.split '='

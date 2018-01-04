@@ -347,3 +347,10 @@ describe 'Boogie', ->
       spyOn Boogie.prototype, 'evalStorage'
       b = new Boogie
       expect(Boogie::evalStorage).toHaveBeenCalled()
+
+    it 'should remove record when deactivated', ->
+      localStorage.setItem('boogieactivate', 1)
+      b = new Boogie()
+      b.deactivate()
+      expect(localStorage.getItem('boogieactivate')).toEqual(null)
+
