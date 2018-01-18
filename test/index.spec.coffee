@@ -293,12 +293,20 @@ describe 'Boogie', ->
 
     it 'should activate via URL param', ->
       b.deactivate()
-      result = b.evalLocation {search: '?boogieactivate=1'}
+      b.evalLocation {search: '?boogieactivate=1'}
       expect(b.is_active).toEqual true
 
+    it 'should save activation to storage when activated via URL param', ->
+      b.evalLocation {search: '?boogieactivate=1'}
+      expect(localStorage.getItem('boogieactivate')).toEqual('1')
+
     it 'should set filter via URL param', ->
-      result = b.evalLocation {search: '?boogiefilter=info,warn'}
+      b.evalLocation {search: '?boogiefilter=info,warn'}
       expect(b.options.filter).toEqual ['info', 'warn']
+
+    it 'should save filter to storage when set via URL param', ->
+      b.evalLocation {search: '?boogiefilter=info,warn'}
+      expect(localStorage.getItem('boogiefilter')).toEqual('info,warn')
 
     it 'should use url_prefix when parsing location', ->
       b.deactivate()

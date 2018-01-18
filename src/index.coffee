@@ -107,10 +107,12 @@ module.exports = class Boogie
     params = @parseLocation location
 
     if params["#{@options.url_prefix}activate"]?
+      localStorage.setItem("#{@options.url_prefix}activate", 1)
       @activate()
 
     found_filter = params["#{@options.url_prefix}filter"]
     if found_filter?
+      localStorage.setItem("#{@options.url_prefix}filter", found_filter)
       @setOptions filter: found_filter.split ','
 
 
