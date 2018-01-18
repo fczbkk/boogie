@@ -1,3 +1,13 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/fczbkk/boogie/compare/v1.2.0...v1.3.0) (2018-01-18)
+
+
+### Features
+
+* save URL properties in storage ([f4503c8](https://github.com/fczbkk/boogie/commit/f4503c8)), closes [inlinemanual/player#1153](https://github.com/inlinemanual/player/issues/1153)
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/fczbkk/boogie/compare/v1.1.1...v1.2.0) (2018-01-04)
 
